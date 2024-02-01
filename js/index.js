@@ -33,29 +33,39 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function getReleases(url) {
-        get(url).then(function (data) {
-            // Destructure the releases
-            const { releases } = data;
-            // Create  UL
-            const list = document.createElement('ul');
-            // Append it to the #root
-            root.appendChild(list);
+        get(url + `?token=OUWnmothIZnwFPlDEXhlkDsJWNAcNPGrLNoGkVKQ`).then(
+            function (data) {
+                // Destructure the releases
+                const { releases } = data;
+                // Create  UL
+                const list = document.createElement('ul');
+                // Append it to the #root
+                root.appendChild(list);
 
-            // Loop through the releases array
-            releases.map(function (release) {
-                // Create a list item
-                const listItem = document.createElement('li');
-                // Add the release title to the list item
-                listItem.textContent = `${release.title} -  ${release.year}`;
-                // Append the lisi item to the list
-                list.appendChild(listItem);
-            });
-        });
+                // Loop through the releases array
+                releases.map(function (release) {
+                    // Create a list item
+                    const listItem = document.createElement('li');
+                    // Create a button
+                    const addToPlaylistBTN = document.createElement('button');
+                    addToPlaylistBTN.type = 'button';
+                    addToPlaylistBTN.textContent = 'Add to Playlist';
+                    // Add the release title to the list item
+                    listItem.textContent = `${release.title} -  ${release.year}`;
+                    // Add the button to the list item
+                    listItem.appendChild(addToPlaylistBTN);
+                    // Append the lisi item to the list
+                    list.appendChild(listItem);
+                });
+            }
+        );
     }
 
     // This is an Immediately Invoked Function Expression aka IIFE (iffy)
     (function () {
-        get(`https://api.discogs.com/artists/${artistId}`).then(function (data) {
+        get(
+            `https://api.discogs.com/artists/${artistId}?token=OUWnmothIZnwFPlDEXhlkDsJWNAcNPGrLNoGkVKQ`
+        ).then(function (data) {
             // Destructure our data
             const { name, releases_url } = data;
             // Call it back
